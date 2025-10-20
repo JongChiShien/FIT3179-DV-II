@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "data": {"url": "../data/hh_poverty_state.csv"}, 
+  "data": {"url": "data/hh_poverty_state.csv"}, 
   "params": [
     {
         "name": "region_selection",
@@ -148,4 +148,5 @@
         "axisY": {"minExtent": 30}, 
         "header": {"labelFontSize": 0, "labelLimit": 0}
     }
+
 }
