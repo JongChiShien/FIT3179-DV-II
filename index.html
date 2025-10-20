@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <title>Data Visualisation 2</title>
+</head>
+<body>
+    
+    <div class="header">
+        <h1>Poverty In Malaysia (1970-2022)</h1>
+    </div>
+    
+    <div class="container">
+        <h1 class="container-title">Trends Over Time</h1>
+        <div class="content">
+            <div class="chart">
+                <div id="vis1"></div>
+            </div>
+            <div class="text-column">
+                <div class="text">
+                    <p><b>Poverty in Malaysia</b> has gradually declined as the nation's economy developed and living standards
+                        improved. Despite that, <b>many families continue to experience financial difficulties</b> that prevents them from 
+                        meeting <b>basic needs</b>.
+                </p>
+                </div>
+                <div class="box">
+                        Poverty can be measured in three ways:<br> 
+                        <span style="color:#ff7f0e; font-weight:bold;">Hardcore Poverty</span> - Living in extreme hardship <br> 
+                        <span style="color:#1f77b4; font-weight: bold;">Absolute Poverty</span> - Unable to afford basic needs <br> 
+                        <span style="color: #d62728; font-weight: bold;">Relative Poverty</span> - Having Income below average</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="container-title">Distribution Across States and Federal Territories</h1>
+        <div class="content-column">
+            <div class="text-v">
+                <p>Poverty trends vary across regions (<b>13 states and 3 federal territories</b>). In earlier years, there are <b>fewer measurements</b>, especially
+                for the federal territories, where <b>records only started in 1984</b>. This is due to some territories <b>being formed later</b>.</p>
+            </div>
+            <div class="chart-axis">
+                <div class="axis y">Poverty Rate (%)</div>
+                <div class="chart-wrapper">
+                    <div class="chart">
+                        <div id="vis2"></div>
+                    </div>
+                    <div class="axis x">Year</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="container-title">Geographic Distribution</h1>
+        <div class="content-graph">
+            <div class="chart-graph">
+                <div id="vis3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="container-title">Ethnic Poverty</h1>
+        <div class="content-bubble">
+            <div class="chart">
+                <div id="vis4"></div>
+            </div>
+            <div class="box-bubble">
+                <p>In a multiracial country, comparing ethnic groups highlights which communities face higher poverty.
+                    Over <b>17 years</b>, the 
+                    <span style="color: #9b59b6; font-weight: bold;">Other</span> category continues to experience 
+                    <b>higher poverty rates</b>, which may include ethnicities such as Malay, Iban, or non-Malaysian citizens.<br>
+                    Poverty rate among 
+                    <span style="color: #f39c12; font-weight: bold;">Indians</span> has also <b>raised significantly by 2.9%</b>.
+                </p>
+            </div>
+            <div class="second-bubble">
+                <div id="vis5"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="container-title">Poverty Risk Factor 1: Unemployment</h1>
+        <div class="content-bar">
+            <div class="chart-bar">
+                <div id="vis6"></div>
+            </div>
+            <div class="text-column">
+                <div class="text-bar">
+                    <p>Without a job, people do not have enough <b>income</b> to meet their <b>basic needs</b>, increasing their risk of
+                        falling into <b>poverty</b>.
+                </div>
+                <div class="box">
+                    <p>Throughout the years, <b>female unemployment rates</b> have remained higher than male rates, with <b>2009</b> being the
+                        <b>worst year</b>, as women were more likely to experience poverty due to a poor economy and fewer job opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="container-title">Poverty Risk Factor 2: Financial Gap, Income, Expenditure</h1>
+        <div class="content-bar">
+            <div class="chart-bar">
+                <div id="vis7"></div>
+            </div>
+            <div class="text-column">
+                <div class="text-scatter">
+                    <p><b>Income</b> and <b>expenditure</b> plays an important role in determining poverty.<br><br>
+                    <b>The financial gap</b> refers to the difference between <b>income</b> and <b>expenditure</b>. A <b>wider gap</b>
+                    may indicate that some families have <b>higher income</b> thus, <b>lower poverty</b>. However it can also indicate that families
+                    are <b>spending more than they earn</b> so increasing their risk of <b>falling into poverty</b>.
+                    </p>
+                </div>
+                <div class="box">
+                    <p><b>One outlier shows a much higher poverty rate than expected </b>based on its income 
+                        and expenditure levels, suggesting that the <b>state may be experiencing some issues</b>. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="small-font">
+            <p>Visualisation by Jong Chi Shien<br>
+                Date created on 19th October 2025<br>
+                Data Source:<br>
+                <a href="https://data.gov.my/">https://data.gov.my/</a><br>
+                <a href="https://archive.data.gov.my/data/dataset/number-and-percentage-distribution-of-underemployed-persons-by-sex-malaysia">https://archive.data.gov.my/data/dataset/number-and-percentage-distribution-of-underemployed-persons-by-sex-malaysia</a>
+            </p>
+        </div>
+    </div>
+
+    <script type="text/javascript"> 
+        var specVis1 = "js/line_chart.vg.json";
+        var specVis2 = "js/multi_line_chart.vg.json";
+        var specVis3 = "js/choropleth_map.vg.json";
+        var specVis4 = "js/bubble.vg.json";
+        var specVis5 = "js/bubble2.vg.json";
+        var specVis6 = "js/bar_chart.vg.json";
+        var specVis7 = "js/scatter_plot.vg.json";
+
+        vegaEmbed('#vis1', specVis1, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis2', specVis2, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis3', specVis3, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis4', specVis4, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis5', specVis5, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis6', specVis6, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+         vegaEmbed('#vis7', specVis7, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+    </script>
+</body>
+</html>
