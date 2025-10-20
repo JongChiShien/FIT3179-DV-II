@@ -1,6 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-    "data": {"url": "../data/unemployment.csv"}, 
+    "data": {"url": "data/unemployment.csv"}, 
     "params": [
         {
             "name": "gender_select",
@@ -131,4 +131,5 @@
             }
         }
     ]
+
 }
