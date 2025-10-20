@@ -19,7 +19,7 @@
                 "lookup": "properties.Name", 
                 "from": {
                     "data": {
-                        "url": "../data/poverty_state.csv"
+                        "url": "data/poverty_state.csv"
                     }, 
                     "key": "state", 
                     "fields": ["poverty"]
@@ -73,7 +73,7 @@
     },
     {
         "data": {
-            "url": "../data/poverty_state.csv"
+            "url": "data/poverty_state.csv"
         }, 
         "transform": [
             {
@@ -148,4 +148,5 @@
         }
     }
 ]
+
 }
