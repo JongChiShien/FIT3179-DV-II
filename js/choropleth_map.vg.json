@@ -1,0 +1,151 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "title": {
+        "text": "Poverty Across Malaysian States (2022)",
+        "fontSize": 17, 
+        "font": "Open Sans", 
+        "fontWeight": "bold"
+    }, 
+    "width": 950,
+    "height": 450, 
+    "projection": {"type": "mercator", "center": [108, 4], "scale": 3065},
+    "layer":[{
+        "data": {
+            "url": "https://raw.githubusercontent.com/jnewbery/CartogramMalaysia/9ac25c828e0306dfa2c2869f98eb2b357da69764/public/data/malaysia-states.topojson",  
+            "format": {"type": "topojson", "feature": "states"}
+        },
+        "transform": [
+            {
+                "lookup": "properties.Name", 
+                "from": {
+                    "data": {
+                        "url": "../data/poverty_state.csv"
+                    }, 
+                    "key": "state", 
+                    "fields": ["poverty"]
+                }
+            }, 
+            {
+                "filter": "datum['properties.Name'] != 'Kuala Lumpur' && datum['properties.Name'] != 'Labuan'"  
+            },
+            {
+                "calculate": "(datum.poverty - 1.4)/(19.7 - 1.4)",
+                "as": "poverty_norm"
+            }
+        ],
+        "mark": {
+            "type": "geoshape",
+            "stroke": "#656565",
+            "strokeWidth": 0.5
+        }, 
+        "encoding": {
+            "color": {
+                "field": "poverty_norm", 
+                "type": "quantitative", 
+                "scale": {"scheme": "browns"},
+            "legend": {
+                "title": "Poverty Scale",
+                "offset": 0,
+                "titleFont": "Open Sans",
+                "labelFont": "Open Sans",
+                "titleFontSize": 11,
+                "labelFontSize": 10
+            }},
+            "tooltip": [
+                {"field": "properties.Name", "type": "nominal", "title": "State"}, 
+                {"field": "poverty", "type": "quantitative", "title": "Poverty Rate (%)"},
+                {"field": "poverty_norm", "type": "quantitative", "title": "Poverty Scale", "format": ".2f"}
+            ]
+        }
+    }, 
+    {
+        "data": {
+            "graticule": {
+                "step": [5, 5], 
+                "extent": [[100,0], [117, 8]]
+            }},
+        "mark": {
+            "type": "geoshape",
+            "stroke": "#c5c2c2",
+            "strokeWidth": 0.3,
+            "fill": null
+        }
+    },
+    {
+        "data": {
+            "url": "../data/poverty_state.csv"
+        }, 
+        "transform": [
+            {
+                "filter": "datum.state != 'Kuala Lumpur'"
+            }
+        ],
+        "mark": {"type": "text", "fontSize": 12, "font": "Open Sans"}, 
+        "encoding": {
+            "longitude": {"field": "longitude", "type": "quantitative"},
+            "latitude": {"field": "latitude", "type": "quantitative"}, 
+            "text": {"field": "state", "type": "nominal"}
+        }
+    }, 
+    {
+        "data": {
+            "values": [
+               {
+                "points": [
+                    {"lon": 111.5, "lat": 6.0},
+                    {"lon": 113.7, "lat": 5.4}
+                ], 
+                "label": "Eastern Poverty"
+               }, 
+                {
+                "points": [
+                    {"lon": 110.1, "lat": 2.8},
+                    {"lon": 110.1, "lat": 5.8}
+                ], 
+                "label": "Sarawak"
+               },
+               {
+                "points": [
+                    {"lon": 102.3, "lat": 5.8}, 
+                    {"lon": 103.5, "lat": 5.5}
+                ], 
+                "label": "Rural Poverty"
+               }
+            ]
+        },
+        "transform": [
+            {"flatten": ["points"], "as": ["point"]}
+        ],
+        "mark": {"type": "line", "color": "gray", "strokeWidth": 2},
+        "encoding": {
+            "longitude": {"field": "point.lon"}, 
+            "latitude": {"field": "point.lat"}, 
+            "detail": {"field": "label"}
+        }
+    },
+    {
+        "data": {
+            "values": [
+                {"lon": 110.8, "lat": 6.4, "label": "Eastern states have high poverty rates"},
+                {"lon": 110.8, "lat": 6.1, "label": "due to lower GDP growth"},
+                {"lon": 106, "lat": 5.4, "label": "Lower economic activity in rural states"},
+                {"lon": 106, "lat": 5.1, "label": "leads to higher poverty rates"}
+            ]
+        },
+        "mark": 
+        {
+            "type": "text", 
+            "font": "Open Sans",
+            "dx": 5, 
+            "dy": -5, 
+            "fontSize": 15, 
+            "color": "black"
+        }, 
+        "encoding": {
+            "longitude": {"field": "lon"}, 
+            "latitude": {"field": "lat"}, 
+            "text": {"field": "label"}
+        }
+    }
+]
+}

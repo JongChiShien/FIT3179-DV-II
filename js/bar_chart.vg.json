@@ -1,0 +1,134 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "data": {"url": "../data/unemployment.csv"}, 
+    "params": [
+        {
+            "name": "gender_select",
+            "value": "All",
+            "bind": {
+                "input": "select", 
+                "options": ["All", "Male", "Female"],
+                "name": "Gender Selection: "
+            }
+        }
+    ],
+    "transform": [
+        {
+            "filter": {
+            "field": "Year", 
+            "oneOf": [2001, 2009,2015, 2020, 2021]
+        }
+    },
+    {
+        "filter": "gender_select == 'All' || datum.Sex == gender_select" 
+    }
+    ],
+    "width": 555, 
+    "height": 380,
+    "layer": [
+        {
+            "mark": "bar", 
+            "encoding": {
+                "y": {
+                    "field": "Year", 
+                    "type": "ordinal", 
+                    "title": "Year", 
+                    "axis": {
+                        "titleFontSize": 13,
+                        "labelFontSize": 11,
+                        "labelColor": "#656565",
+                        "labelFont": "Open Sans",
+                        "titleFont": "Open Sans"
+                    }
+                }, 
+                "x": {
+                    "field": "Percentage", 
+                    "type": "quantitative", 
+                    "title": "Unemployment Rate (%)", 
+                    "scale": {"domain": [0, 70]}, 
+                    "axis": {
+                        "titleFontSize": 13,
+                        "labelFontSize": 11,
+                        "labelColor": "#656565",
+                        "tickMinStep": 10,
+                        "labelFont": "Open Sans",
+                        "titleFont": "Open Sans"
+                    }
+                        }, 
+                "yOffset": {"field": "Sex"}, 
+                "color": {
+                    "field": "Sex", 
+                    "type": "nominal", 
+                    "legend": {
+                        "title": "Gender", 
+                        "orient": "top-right",
+                        "labelFont": "Open Sans",
+                        "titleFont": "Open Sans",
+                        "titleFontSize": 11,
+                        "labelFontSize": 10}
+                }, 
+                "tooltip": [
+                    {"field": "Year", "type": "ordinal"}, 
+                    {"field": "Sex", "type": "nominal", "title": "Gender"}, 
+                    {"field": "Percentage", "type": "quantitative", "title": "Unemployment Rate (%)"}
+                ]
+            }
+        }, 
+        {
+            "transform": [
+                {"filter": "datum.Percentage != 59.9 && datum.Percentage != 49.7"}
+            ], 
+            "mark": {
+                "type": "text", 
+                "align": "center", 
+                "baseline": "middle",  
+                "dx": 15, 
+                "fontSize": 11, 
+                "font": "Open Sans"
+            }, 
+            "encoding": {
+                "x": {"field": "Percentage", "type": "quantitative"},
+                "y": {"field": "Year", "type": "ordinal"}, 
+                "yOffset": {"field": "Sex"}, 
+                "text": {"field": "Percentage", "type": "quantitative"}, 
+                "color": {
+                    "field": "Sex", 
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["Male", "Female"],
+                        "range": ["#007bff", "#FF474C"]
+                    },
+                    "legend": null
+                }
+            }
+        }, 
+        {
+            "transform": [
+                {"filter": "datum.Percentage == 59.9 || datum.Percentage == 49.7"}
+            ], 
+            "mark": {
+                "type": "text", 
+                "align": "center", 
+                "baseline": "middle",  
+                "dx": 15,
+                "font": "Open Sans", 
+                "fontSize": 13,
+                "fontWeight": "bold"
+            }, 
+            "encoding": {
+                "x": {"field": "Percentage", "type": "quantitative"},
+                "y": {"field": "Year", "type": "ordinal"}, 
+                "yOffset": {"field": "Sex"}, 
+                "text": {"field": "Percentage", "type": "quantitative"},
+                "color": {
+                    "field": "Sex", 
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["Male", "Female"],
+                        "range": ["#007bff", "#FF474C"]
+                    }, 
+                    "legend": null}
+            }
+        }
+    ]
+}

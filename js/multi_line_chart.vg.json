@@ -1,0 +1,151 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {"url": "../data/hh_poverty_state.csv"}, 
+  "params": [
+    {
+        "name": "region_selection",
+        "value": "All",
+        "bind": {
+            "input": "select", 
+            "options": ["All", "States", "Federal Territories"],
+            "labels": ["All", "States Only", "Federal Territories Only"],
+            "name": "Region Selection: "
+        }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.state != 'Malaysia'"},
+    {
+        "calculate": "datum.state == 'W.P. Kuala Lumpur' || datum.state == 'W.P. Labuan' || datum.state == 'W.P. Putrajaya' ? 'Federal Territories' : datum.state == 'Johor' || datum.state == 'Kedah' || datum.state == 'Kelantan' || datum.state == 'Melaka' || datum.state == 'Negeri Sembilan' || datum.state == 'Pahang' || datum.state == 'Perak' || datum.state == 'Perlis' || datum.state == 'Pulau Pinang' || datum.state == 'Sabah' || datum.state == 'Sarawak' || datum.state == 'Selangor' || datum.state == 'Terengganu' ? 'States' : 'Other'",
+        "as": "region_type"
+    },
+    {
+        "filter": "region_selection == 'All' || (region_selection == 'States' && datum.region_type == 'States') || (region_selection == 'Federal Territories' && datum.region_type == 'Federal Territories')"
+    },
+    {
+        "fold": [
+            "poverty_absolute", 
+            "poverty_hardcore", 
+            "poverty_relative"
+        ],
+        "as": ["type", "rate"]
+    },
+    {
+        "calculate": "datum.type == 'poverty_absolute' ? 'Absolute Poverty' : datum.type == 'poverty_hardcore' ? 'Hardcore Poverty' : datum.type == 'poverty_relative' ? 'Relative Poverty' : 'Unknown'",
+        "as": "type_label"
+    }],
+    "columns": 4,
+    "spacing": 2,
+    "facet": {
+        "field": "state", 
+        "type": "nominal",
+        "header": {
+            "title": null, 
+            "labels": false
+        }
+    },
+    "spec": {
+        "width": 220, 
+        "height": 100, 
+        "layer": [
+            {
+                "params": [
+                    {
+                        "name": "povtype", 
+                        "select": {
+                            "type": "point",
+                            "fields": ["type_label"], 
+                            "on": "click"
+                        }, 
+                        "bind": "legend"
+                    }
+                ],
+                "mark": {"type": "line", "point": false}, 
+                "encoding": {
+                    "x": {
+                        "field": "date",
+                        "type": "temporal", 
+                        "title": null, 
+                        "scale": {
+                            "domain": ["1970-01-01", "2022-01-01"],
+                            "nice": false
+                        },
+                        "axis": {
+                            "grid": false, 
+                            "format": "%Y", 
+                            "labelFontSize": 11,
+                            "labelFont": "Open Sans",
+                            "labelColor": "#656565",
+                            "values":[
+                                "1970-01-01",
+                                "1990-01-01", 
+                                "2006-01-01", 
+                                "2022-01-01"]
+                        }
+                    }, 
+                    "y": {
+                        "field": "rate", 
+                        "type": "quantitative",
+                        "title": null, 
+                        "scale": {
+                            "domain": [0,80]
+                        },
+                        "axis": {
+                            "labelFontSize": 11,
+                            "labelColor": "#656565",
+                            "labelFont": "Open Sans"
+                        }
+                    },
+                    "color": {
+                        "field": "type_label", 
+                        "type": "nominal",
+                        "legend": null
+                    }, 
+                    "opacity": {
+                        "condition": {"param": "povtype", "value": 1}, 
+                        "value": 0.1
+                    },
+                    "tooltip": [
+                        {"field": "date", "timeUnit": "year", "title": "Year"},
+                        {"field": "type_label", "type": "nominal", "title": "Poverty Type"},
+                        {"field": "rate", "type": "quantitative", "title": "Poverty Rate (%)"}
+                    ]
+                }
+            },
+            {
+                "transform": [
+                    {
+                        "filter": "datum.type_label == 'Absolute Poverty'"
+                    },
+                    {
+                        "aggregate": [{"op": "min", "field": "date", "as": "min_date"}],
+                        "groupby": ["state"]
+                    },
+                    {
+                        "calculate": "datum.state", 
+                        "as": "state_name"
+                    }
+                ], 
+                "mark": {
+                    "type": "text", 
+                    "align": "center", 
+                    "baseline": "top", 
+                    "dx":5, 
+                    "dy": 5, 
+                    "fontSize": 13, 
+                    "fontWeight": "bold", 
+                    "font": "Open Sans"
+                },
+                "encoding": {
+                    "text": {"field": "state_name", "type": "nominal"}, 
+                    "x": {"value": 110}, 
+                    "y": {"value": 0}
+                }
+            }
+        ]
+    }, 
+    "config": {
+        "axisY": {"minExtent": 30}, 
+        "header": {"labelFontSize": 0, "labelLimit": 0}
+    }
+}
